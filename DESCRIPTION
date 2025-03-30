@@ -11,6 +11,9 @@ RoxygenNote: 7.3.2
 Imports: 
     dplyr,
     httr,
+    janitor,
     jsonlite,
     lubridate,
-    purrr
+    purrr,
+    readr,
+    tidyr
