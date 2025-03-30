@@ -7,7 +7,7 @@
 create_competition_list(URL)
 }
 \arguments{
-\item{URL}{URL for a competition}
+\item{URL}{URL for website}
 }
 \value{
 a list of all events

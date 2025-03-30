@@ -6,7 +6,7 @@
 
 #' create_competition_list
 #'
-#' @param URL URL for a competition
+#' @param URL URL for website
 #'
 #' @returns a list of all events
 #' @export
