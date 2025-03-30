@@ -1,23 +1,23 @@
-#Title: Create competition list
+#Title: fetch past event list
 #AUTHOR: Kirstin Lyon
 #DESCRIPTION: Returns a list of all competitions available on the URL
 #DATE:2025-03-29
 #LICENSE: MIT
 
-#' create_competition_list
-#'
-#' @param URL URL for website
+#' create a list of held competitions from Sporttech.io
 #'
 #' @returns a list of all events
 #' @export
 #'
 #' @examples
 #'  \dontrun{
-#'    create_competition_list(url)
+#'    fetch_past_event_list()
 #' }
-create_competition_list <- function(URL){
+fetch_past_event_list <- function(){
 
-    response <- httr::GET(URL)
+    API_URL <- "http://sporttech.io/api/events/"
+
+    response <- httr::GET(API_URL)
 
     if(httr::http_type(response) == "application/json"){
         temp <- httr::content(response, as = "text") |>
