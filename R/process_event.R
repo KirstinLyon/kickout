@@ -1,35 +1,63 @@
-#' Process and individual event
+#' Process an individual event
 #'
 #' @param file path to a competition file
 #'
-#' @returns a tibble of all scores
+#' @returns a tibble of all scores for a single competition
 #' @export
 #'
 #' @examples
 #'  \dontrun{
 #'    process_event(file)
 #' }
-process_event <- function(file){
-
+process_event <- function(file) {
     temp <- readr::read_csv(file, col_types = readr::cols(.default = "c")) |>
         janitor::clean_names() |>
-        dplyr::filter(judge %in% c("T", "D", "H", "E\u03A3"),
-               discipline == "TRA"
+
+        #convert Esigma to e_sigma
+        dplyr::mutate(judge = dplyr::case_when(
+            grepl("^E.*[^\\x00-\\x7F]$", judge) ~ "e_sigma",
+            TRUE ~ judge
+        )) |>
+        dplyr::filter(judge %in% c("T", "D", "H", "e_sigma"), discipline == "TRA") |>
+        dplyr::mutate(
+            name = paste(given_panel_name, surname),
+            name = stringr::str_squish(name)
         ) |>
-        dplyr::mutate(name = paste(given_name, surname)) |>
-        dplyr::select(-c(subtitle, number, time,
-                  code, external_id,date_of_birth, sex,
-                  given_name, surname, ranked,
-                  team, team_rank, team_mark)) |>
-        dplyr::mutate(unique_person = paste0(stage, group_number, performance_number,
-                                      routine_number, name, discipline, event_uuid))
+        dplyr::select(
+            -c(
+                subtitle,
+                number,
+                time,
+                code,
+                external_id,
+                date_of_birth,
+                sex,
+                given_panel_name,
+                surname,
+                ranked,
+                team,
+                team_rank,
+                team_mark
+            )
+        ) |>
+        dplyr::mutate(
+            unique_person = paste0(
+                stage,
+                group_number,
+                performance_number,
+                routine_number,
+                name,
+                discipline,
+                event_uuid
+            )
+        )
 
     execution_score <- temp |>
-        dplyr::filter(judge == "E\u03A3")
+        dplyr::filter(judge == "e_sigma")
 
     other_scores <- temp |>
-        dplyr::select(judge, x,unique_person) |>
-        dplyr::filter(judge != "E\u03A3") |>
+        dplyr::select(judge, x, unique_person) |>
+        dplyr::filter(judge != "e_sigma") |>
         tidyr::pivot_wider(names_from = judge, values_from = x)
 
 

@@ -7,9 +7,9 @@
 
 #' Process_event_list
 #'
-#' @param event_list list of events
+#' @param event_list list of all trampoline events
 #'
-#' @returns a tibble of all events
+#' @returns a tibble of all trampoline events
 #' @export
 #'
 #' @examples
@@ -21,11 +21,9 @@ process_event_list <- function(event_list){
     temp <- event_list |>
         purrr::map(~.[c("event_id","en_name", "sport", "rules", "begin_date", "end_date")]) |>
         dplyr::bind_rows() |>
+        dplyr::filter(sport == "Trampoline") |>
         dplyr::mutate(begin_date = lubridate::ymd_hms(begin_date),
                 end_date = lubridate::ymd_hms(end_date),
-                year = lubridate::year(begin_date),
-                quarter = lubridate::quarter(begin_date),
-                month = lubridate::month(begin_date)
         ) |>
         dplyr::filter(!is.na(begin_date) & !is.na(end_date)) |>
         dplyr::filter(begin_date < Sys.Date())
