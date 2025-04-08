@@ -2,7 +2,7 @@
 % Please edit documentation in R/process_event.R
 \name{process_event}
 \alias{process_event}
-\title{Process and individual event}
+\title{Process an individual event}
 \usage{
 process_event(file)
 }
@@ -10,10 +10,10 @@ process_event(file)
 \item{file}{path to a competition file}
 }
 \value{
-a tibble of all scores
+a tibble of all scores for a single competition
 }
 \description{
-Process and individual event
+Process an individual event
 }
 \examples{
  \dontrun{

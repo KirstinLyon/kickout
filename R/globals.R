@@ -4,4 +4,5 @@ utils::globalVariables(c("begin_date", "end_date", "judge",
                          "external_id", "date_of_birth", "sex", "ranked", "team",
                          "team_rank", "team_mark", "stage", "group_number",
                          "performance_number", "routine_number",
-                         "name", "event_uuid", "unique_person", "x"))
+                         "name", "event_uuid", "unique_person", "x",
+                         "given_panel_name", "sport"))

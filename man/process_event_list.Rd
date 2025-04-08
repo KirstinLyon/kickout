@@ -7,10 +7,10 @@
 process_event_list(event_list)
 }
 \arguments{
-\item{event_list}{list of events}
+\item{event_list}{list of all trampoline events}
 }
 \value{
-a tibble of all events
+a tibble of all trampoline events
 }
 \description{
 Process_event_list
