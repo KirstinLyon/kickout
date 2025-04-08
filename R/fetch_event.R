@@ -11,6 +11,12 @@
 #' }
 
 fetch_event <- function(id){
+
+    link_start <- "https://sporttech.io/events/"
+    link_end <- "/ovs/api/event/export"
+
+    event_id = paste0(link_start, id, link_end)
+
     temp <- readr::read_csv(event_id, col_types = readr::cols(.default = "c"))
     return(temp)
 }
