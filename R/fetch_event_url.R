@@ -7,10 +7,10 @@
 #'
 #' @examples
 #'  \dontrun{
-#'    fetch_event(id)
+#'    fetch_event_url(id)
 #' }
 
-fetch_event <- function(id){
+fetch_event_url <- function(id){
 
     link_start <- "https://sporttech.io/events/"
     link_end <- "/ovs/api/event/export"

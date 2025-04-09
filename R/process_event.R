@@ -1,6 +1,6 @@
 #' Process an individual event
 #'
-#' @param file path to a competition file
+#' @param event tibble of a competition
 #'
 #' @returns a tibble of all scores for a single competition
 #' @export
@@ -9,8 +9,8 @@
 #'  \dontrun{
 #'    process_event(file)
 #' }
-process_event <- function(file) {
-    temp <- readr::read_csv(file, col_types = readr::cols(.default = "c")) |>
+process_event <- function(event) {
+    temp <- event |>
         janitor::clean_names() |>
 
         #convert Esigma to e_sigma
