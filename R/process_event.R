@@ -18,7 +18,7 @@ process_event <- function(event) {
             grepl("^E.*[^\\x00-\\x7F]$", judge) ~ "e_sigma",
             TRUE ~ judge
         )) |>
-        dplyr::filter(judge %in% c("T", "D", "H", "e_sigma"), discipline == "TRA") |>
+        dplyr::filter(judge %in% c("T", "D", "H", "e_sigma")) |>
         dplyr::mutate(
             name = paste(given_panel_name, surname),
             name = stringr::str_squish(name)
