@@ -4,10 +4,10 @@
 \alias{process_event}
 \title{Process an individual event}
 \usage{
-process_event(file)
+process_event(event)
 }
 \arguments{
-\item{file}{path to a competition file}
+\item{event}{tibble of a competition}
 }
 \value{
 a tibble of all scores for a single competition
