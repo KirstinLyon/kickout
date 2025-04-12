@@ -7,15 +7,13 @@
 #'
 #' @examples
 #'  \dontrun{
-#'    process_event(file)
+#'    process_event(event)
 #' }
 process_event <- function(event) {
     temp <- event |>
         janitor::clean_names() |>
-
-        #Keep only individual and syncronised trampoline events
         dplyr::filter(discipline %in% c("TRA", "SYN"),
-                      !stringr::str_detect(competition, "Test|TEST"),  #remove dummy data
+                      !stringr::str_detect(competition, "Test|TEST"),
         ) |>
 
         #convert Esigma to e_sigma
@@ -46,14 +44,16 @@ process_event <- function(event) {
                 team_mark
             )
         ) |>
+
         dplyr::mutate(
-            unique_person = paste(
+            unique_id = paste(
+                discipline,
+                competition,
                 stage,
                 group_number,
                 performance_number,
                 routine_number,
                 name,
-                discipline,
                 sep = "_"
             )
         )
@@ -62,14 +62,14 @@ process_event <- function(event) {
         dplyr::filter(judge == "e_sigma")
 
     other_scores <- temp |>
-        dplyr::select(judge, x, unique_person) |>
+        dplyr::select(judge, x, unique_id) |>
         dplyr::filter(judge != "e_sigma") |>
         tidyr::pivot_wider(names_from = judge, values_from = x)
 
 
     complete_score <- execution_score |>
-        dplyr::left_join(other_scores, by = "unique_person") |>
-        dplyr::select(-c(unique_person, judge)) |>
+        dplyr::left_join(other_scores, by = "unique_id") |>
+        dplyr::select(-c(judge, unique_id)) |>
         dplyr::rename(execution = x)
 
     return(complete_score)
