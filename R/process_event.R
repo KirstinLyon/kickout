@@ -13,6 +13,11 @@ process_event <- function(event) {
     temp <- event |>
         janitor::clean_names() |>
 
+        #Keep only individual and syncronised trampoline events
+        dplyr::filter(discipline %in% c("TRA", "SYN"),
+                      !stringr::str_detect(competition, "Test|TEST"),  #remove dummy data
+        ) |>
+
         #convert Esigma to e_sigma
         dplyr::mutate(judge = dplyr::case_when(
             grepl("^E.*[^\\x00-\\x7F]$", judge) ~ "e_sigma",
@@ -21,7 +26,8 @@ process_event <- function(event) {
         dplyr::filter(judge %in% c("T", "D", "H", "e_sigma")) |>
         dplyr::mutate(
             name = paste(given_panel_name, surname),
-            name = stringr::str_squish(name)
+            name = stringr::str_squish(name),
+            name = stringr::str_to_title(name)
         ) |>
         dplyr::select(
             -c(
@@ -41,14 +47,14 @@ process_event <- function(event) {
             )
         ) |>
         dplyr::mutate(
-            unique_person = paste0(
+            unique_person = paste(
                 stage,
                 group_number,
                 performance_number,
                 routine_number,
                 name,
                 discipline,
-                event_uuid
+                sep = "_"
             )
         )
 
