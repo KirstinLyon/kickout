@@ -17,3 +17,4 @@ fetch_event_local <- function(file){
 
     return(temp)
 }
+
