@@ -22,11 +22,6 @@ process_event <- function(event) {
             TRUE ~ judge
         )) |>
         dplyr::filter(judge %in% c("T", "D", "H", "e_sigma")) |>
-        dplyr::mutate(
-            name = paste(given_panel_name, surname),
-            name = stringr::str_squish(name),
-            name = stringr::str_to_title(name)
-        ) |>
         dplyr::select(
             -c(
                 subtitle,
@@ -36,8 +31,6 @@ process_event <- function(event) {
                 external_id,
                 date_of_birth,
                 sex,
-                given_panel_name,
-                surname,
                 ranked,
                 team,
                 team_rank,
@@ -53,7 +46,8 @@ process_event <- function(event) {
                 group_number,
                 performance_number,
                 routine_number,
-                name,
+                given_panel_name,
+                surname,
                 sep = "_"
             )
         )
