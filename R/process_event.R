@@ -70,7 +70,9 @@ process_event <- function(event) {
     complete_score <- execution_score |>
         dplyr::left_join(other_scores, by = "unique_id") |>
         dplyr::select(-c(judge, unique_id)) |>
-        dplyr::rename(execution = x)
+        dplyr::rename(execution = x) |>
+        dplyr::left_join(kickout::data_representing_map, by = "representing") |>
+        dplyr::select(-representing)
 
     return(complete_score)
 }
