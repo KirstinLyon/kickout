@@ -3,7 +3,7 @@
 \docType{data}
 \name{data_representing_map}
 \alias{data_representing_map}
-\title{Variable map for mapping program area to program area name}
+\title{Variable map for mapping representing to country and club}
 \format{
 A list of the variables included to engineer dataset features
 \describe{
@@ -16,6 +16,6 @@ A list of the variables included to engineer dataset features
 data(data_representing_map)
 }
 \description{
-List of indicators
+List of clubs
 }
 \keyword{datasets}

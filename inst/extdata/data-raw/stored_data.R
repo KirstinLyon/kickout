@@ -12,14 +12,17 @@ tibble::tribble(
          "Haslev Trampolin og Turngymnaster",    "DEN", "Haslev Trampolin og Turngymnaster",
     "Haslev Trampolin og Turngymnaster (TT)",    "DEN", "Haslev Trampolin og Turngymnaster",
                                  "Haslev TT",    "DEN", "Haslev Trampolin og Turngymnaster",
+                                 "HASLEV TT",    "DEN", "Haslev Trampolin og Turngymnaster",
                          "Højby Skytte & GF",    "DEN",                 "Højby Skytte & GF",
                         "DEN, IK Skovbakken",    "DEN",         "IK Skovbakken - Trampolin",
               "DEN, IK Skovbakken Trampolin",    "DEN",         "IK Skovbakken - Trampolin",
+                   "IK Skovbakken Trampolin",    "DEN",         "IK Skovbakken - Trampolin",
                  "IK Skovbakken - Trampolin",    "DEN",         "IK Skovbakken - Trampolin",
             "Jelling Forenede Sportsklubber",    "DEN",    "Jelling Forenede Sportsklubber",
        "DEN, Jelling Forenede Sportsklubber",    "DEN",    "Jelling Forenede Sportsklubber",
            "DEN, Copenhagen Trampoline Club",    "DEN",          "Københavns Trampolinklub",
              "DEN, Københavns Trampolinklub",    "DEN",          "Københavns Trampolinklub",
+                "Copenhagen Trampoline Club",    "DEN",          "Københavns Trampolinklub",
                   "Københavns Trampolinklub",    "DEN",          "Københavns Trampolinklub",
                    "Lundtofte Trampolinklub",    "DEN",           "Lundtofte Trampolinklub",
                   "DEN, OGF Trampoline Team",    "DEN",         "Odense Gymnastik Forening",
@@ -37,10 +40,25 @@ tibble::tribble(
                                      "Strib",    "DEN",        "Strib Udspring & Trampolin",
                 "Strib Udspring & Trampolin",    "DEN",        "Strib Udspring & Trampolin",
                       "DEN, Strib Trampolin",    "DEN",        "Strib Udspring & Trampolin",
+                           "Strib Trampolin",    "DEN",        "Strib Udspring & Trampolin",
                              "DEN, Team Fyn",    "DEN",                          "Team Fyn",
                                      "TGA20",    "DEN",                             "TGA20",
                                   "Vejen GF",    "DEN",                          "Vejen GF"
     )
 
 
+
 usethis::use_data(data_representing_map, overwrite = TRUE)
+
+
+data_name_club_map <-
+tibble::tribble(
+                  ~name, ~country,          ~name_other,                               ~club,
+        "Teis Petersen",    "DEN",      "Teis Petersen", "Haslev Trampolin og Turngymnaster",
+    "Valdemar Johansen",    "DEN",  "Valdemar Johansen",         "IK Skovbakken - Trampolin",
+        "Smilla Jensen",    "DEN", "Smilla Thea Jensen",          "Københavns Trampolinklub",
+      "Aksel Koldkjaer",    "DEN",    "Aksel Koldkjaer",            "Springteam Nordjylland"
+    )
+
+usethis::use_data(data_name_club_map, overwrite = TRUE)
+

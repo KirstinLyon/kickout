@@ -72,12 +72,11 @@ process_event <- function(event) {
         dplyr::select(-c(judge, unique_id)) |>
         dplyr::rename(execution = x) |>
         dplyr::left_join(kickout::data_representing_map, by = "representing") |>
-        dplyr::mutate(country = dplyr::case_when(is.na(country) ~ clean_representing_test(representing, title,1),
+        dplyr::mutate(country = dplyr::case_when(is.na(country) ~ kickout::clean_representing(representing, title,1),
                                           .default = country),
-                      club = dplyr::case_when(is.na(club) ~ clean_representing_test(representing, title,2),
+                      club = dplyr::case_when(is.na(club) ~ kickout::clean_representing(representing, title,2),
                                        .default = club)
-        ) |>
-        dplyr::select(-representing)
+        )
 
 
     return(complete_score)
