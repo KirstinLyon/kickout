@@ -2,7 +2,7 @@
 % Please edit documentation in R/fetch_event_url.R
 \name{fetch_event_url}
 \alias{fetch_event_url}
-\title{Return the CSV file of one event}
+\title{Return the CSV file of one event cleaned}
 \usage{
 fetch_event_url(id)
 }
@@ -13,7 +13,7 @@ fetch_event_url(id)
 tibble of a csv
 }
 \description{
-Return the CSV file of one event
+Return the CSV file of one event cleaned
 }
 \examples{
  \dontrun{

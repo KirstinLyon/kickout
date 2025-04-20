@@ -1,4 +1,4 @@
-#' Return the CSV file of one event
+#' Return the CSV file of one event cleaned
 #'
 #' @param id id of an event
 #'
@@ -17,6 +17,7 @@ fetch_event_url <- function(id){
 
     event_id = paste0(link_start, id, link_end)
 
-    temp <- readr::read_csv(event_id, col_types = readr::cols(.default = "c"))
+    temp <- readr::read_csv(event_id, col_types = readr::cols(.default = "c")) |>
+        kickout::process_event()
     return(temp)
 }

@@ -17,6 +17,6 @@ Process an individual event
 }
 \examples{
  \dontrun{
-   process_event(file)
+   process_event(event)
 }
 }
