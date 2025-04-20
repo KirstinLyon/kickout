@@ -23,21 +23,23 @@ Here is a basic example of how to use kickout:
 ``` r
 library(kickout)
 
-# Load your competition data
+# Load and process the list of events
 
-data <- load_competition_data("path/to/your/data.csv")
+event_list <- kickout::fetch_past_event_list() |> 
+    kickout::process_event_list()
 
-# Process the data
+# fetch all trampoline and synchronised trampoline data based on your list and add date and rules.
 
-processed_data <- process_data(data)
+event_rules <- event_list |> 
+    select(event_id, rules, begin_date)
 
-# Analyze the data
-
-analysis_results <- analyze_data(processed_data)
+events <- purrr::map(event_list$event_id, fetch_event_url) |>
+    bind_rows()|> 
+    left_join(event_rules, by = c("event_uuid" = "event_id"))
 
 # Print the results
 
-print(analysis_results)
+glimpse(events)
 ```
 
 ## Features
@@ -45,12 +47,6 @@ print(analysis_results)
 **Data Loading**: Easily load trampoline competition data from CSV files.
 
 **Data Processing:** Clean and process the data to make it ready for analysis.
-
-**Analysis Tools:** Provides functions to analyze competition data and generate insights.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
 
 ## License
 
