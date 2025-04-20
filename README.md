@@ -1,6 +1,6 @@
 # kickout
 
-kickout is an R package designed to process trampoline competition data from sporttech.io. This package provides tools to efficiently handle and analyze competition data, making it easier for users to work with trampoline-related datasets.
+kickout is an R package designed to process trampoline competition data from sporttech.io. This package provides tools to efficiently handle and process competition data, making it easier for users to work with trampoline-related datasets.
 
 ## Installation
 
