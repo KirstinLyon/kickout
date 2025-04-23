@@ -4,10 +4,12 @@
 \alias{fetch_event_url}
 \title{Return the CSV file of one event cleaned}
 \usage{
-fetch_event_url(id)
+fetch_event_url(id, e_list)
 }
 \arguments{
 \item{id}{id of an event}
+
+\item{e_list}{list of events as a tibble}
 }
 \value{
 tibble of a csv

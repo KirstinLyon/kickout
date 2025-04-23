@@ -7,4 +7,4 @@ utils::globalVariables(c("begin_date", "end_date", "judge",
                          "name", "event_uuid", "unique_person", "x",
                          "given_panel_name", "sport", "event_id",
                          "link_start", "link_end", "competition", "unique_id",
-                         "country", "club"))
+                         "country", "club", "en_name"))
