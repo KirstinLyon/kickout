@@ -65,12 +65,15 @@ usethis::use_data(data_representing_map, overwrite = TRUE)
 
 data_name_club_map <-
 tibble::tribble(
-             ~name, ~country,                       ~club,
-         "Teis Petersen",    "DEN",                 "Haslev TT",
-     "Valdemar Johansen",    "DEN", "IK Skovbakken - Trampolin",
-    "Smilla Thea Jensen",    "DEN",                       "KTK",
-       "Aksel Koldkjaer",    "DEN",    "Springteam Nordjylland"
+                   ~name, ~country_1,                     ~club_1,
+         "Teis Petersen",      "DEN",                 "Haslev TT",
+     "Valdemar Johansen",      "DEN", "IK Skovbakken - Trampolin",
+    "Smilla Thea Jensen",      "DEN",                       "KTK",
+       "Aksel Koldkjaer",      "DEN",    "Springteam Nordjylland",
+        "Benjamin Kjaer",      "DEN",                 "Haslev TT"
     )
+
+
 
 
 
