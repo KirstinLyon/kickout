@@ -26,7 +26,7 @@ process_event_list <- function(event_list){
                 end_date = lubridate::ymd_hms(end_date),
         ) |>
         dplyr::filter(!is.na(begin_date) & !is.na(end_date)) |>
-        dplyr::filter(begin_date < Sys.Date())
+        dplyr::filter(end_date < Sys.Date())
 
     return(temp)
 }

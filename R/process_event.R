@@ -55,23 +55,47 @@ process_event <- function(event) {
     execution_score <- temp |>
         dplyr::filter(judge == "e_sigma")
 
+
     other_scores <- temp |>
         dplyr::select(judge, x, unique_id) |>
         dplyr::filter(judge != "e_sigma") |>
         tidyr::pivot_wider(names_from = judge, values_from = x)
+
+    other_scores <- other_scores |>
+        dplyr::mutate(
+            H = if ("H" %in% colnames(other_scores)) H else NA_character_,
+            D = if ("D" %in% colnames(other_scores)) D else NA_character_
+        )
 
 
     complete_score <- execution_score |>
         dplyr::left_join(other_scores, by = "unique_id") |>
         dplyr::select(-c(judge, unique_id)) |>
         dplyr::rename(execution = x) |>
-        dplyr::left_join(kickout::data_representing_map, by = "representing") |>
-        dplyr::mutate(country = dplyr::case_when(is.na(country) ~ kickout::clean_representing(representing, title,1),
-                                          .default = country),
-                      club = dplyr::case_when(is.na(club) ~ kickout::clean_representing(representing, title,2),
-                                       .default = club)
+        dplyr::mutate(
+
+            execution = dplyr::case_when(discipline == "TRA" ~ as.numeric(execution)/10,
+                                         TRUE ~ as.numeric(execution)),
+            T = dplyr::case_when(discipline == "TRA" ~  as.numeric(T)/1000,
+                                 TRUE ~ as.numeric(T)),
+            mark_total = dplyr::case_when(discipline == "TRA" ~ as.numeric(mark_total)/ 1000,
+                                          TRUE ~ as.numeric(mark_total)),
+            mark = dplyr::case_when(discipline == "TRA" ~ as.numeric(mark)/ 1000,
+                                    TRUE ~ as.numeric(mark)),
+            H = dplyr::case_when(discipline == "TRA" ~ as.numeric(H)/10,
+                                 TRUE ~ as.numeric(H)),
+            H = H / 10,
+            D = dplyr::case_when(discipline  == "TRA" ~ as.numeric(D)/10,
+                                 TRUE ~ as.numeric(D))
         )
 
 
-    return(complete_score)
+    #clean names, countries, clubs
+    final_data <- complete_score |>
+        clean_names() |>
+        clean_representing() |>
+        clean_international_name()
+
+
+    return(final_data)
 }
