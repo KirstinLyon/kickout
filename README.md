@@ -30,12 +30,8 @@ event_list <- kickout::fetch_past_event_list() |>
 
 # fetch all trampoline and synchronised trampoline data based on your list and add date and rules.
 
-event_rules <- event_list |> 
-    select(event_id, rules, begin_date)
-
-events <- purrr::map(event_list$event_id, fetch_event_url) |>
-    bind_rows()|> 
-    left_join(event_rules, by = c("event_uuid" = "event_id"))
+events <- purrr::map(event_list$event_id, ~ kickout::fetch_event_url(.x, event_list)) |>
+    bind_rows()
 
 # Print the results
 
