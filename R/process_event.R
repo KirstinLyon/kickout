@@ -61,6 +61,12 @@ process_event <- function(event) {
         dplyr::filter(judge != "e_sigma") |>
         tidyr::pivot_wider(names_from = judge, values_from = x)
 
+    other_scores <- other_scores |>
+        dplyr::mutate(
+            H = if ("H" %in% colnames(other_scores)) H else NA_character_,
+            D = if ("D" %in% colnames(other_scores)) D else NA_character_
+        )
+
 
     complete_score <- execution_score |>
         dplyr::left_join(other_scores, by = "unique_id") |>
@@ -73,55 +79,22 @@ process_event <- function(event) {
             T = dplyr::case_when(discipline == "TRA" ~  as.numeric(T)/1000,
                                  TRUE ~ as.numeric(T)),
             mark_total = dplyr::case_when(discipline == "TRA" ~ as.numeric(mark_total)/ 1000,
-                                   TRUE ~ as.numeric(mark_total)),
+                                          TRUE ~ as.numeric(mark_total)),
             mark = dplyr::case_when(discipline == "TRA" ~ as.numeric(mark)/ 1000,
-                             TRUE ~ as.numeric(mark))
-        ) #|>
-
-    #TODO handle when cols are missing
-
-    #these can be missing sometimes - how to fix?
-    #        dplyr::mutate(H = dplyr::case_when(discipline == "TRA" ~ as.numeric(H)/10,
-    #                                            TRUE ~ as.numeric(H)),
-    #                      H = H / 10,
-    #                      D = dplyr::case_when(discipline  == "TRA" ~ as.numeric(D)/10,
-    #                                           TRUE ~ as.numeric(D)),
-    #        )
+                                    TRUE ~ as.numeric(mark)),
+            H = dplyr::case_when(discipline == "TRA" ~ as.numeric(H)/10,
+                                 TRUE ~ as.numeric(H)),
+            H = H / 10,
+            D = dplyr::case_when(discipline  == "TRA" ~ as.numeric(D)/10,
+                                 TRUE ~ as.numeric(D))
+        )
 
 
     #clean names, countries, clubs
     final_data <- complete_score |>
-        #update name
-        dplyr::mutate(name = dplyr::case_when(title == "DM Senior 2024" ~ paste(surname, given_panel_name, sep = " "),
-                                              TRUE ~ paste(given_panel_name, surname, sep = " ")
-        ),
-        name = stringr::str_to_title(name),
-        name = stringr::str_squish(name),
-        ) |>
-        dplyr::left_join(kickout::data_name_variation_map, by = "name") |>
-        dplyr::mutate(name = dplyr::case_when(!is.na(name_1) ~ name_1,
-                                              TRUE ~ name
-        )) |>
-        dplyr::select(-c(name_1, surname, given_panel_name)) |>
-
-        #update club and country
-
-        dplyr::left_join(kickout::data_representing_map, by = "representing") |>
-        dplyr::mutate(country = dplyr::case_when(is.na(country) ~ kickout::clean_representing(representing, title,1),
-                                                 TRUE ~ country),
-                      club = dplyr::case_when(is.na(club) ~ kickout::clean_representing(representing, title,2),
-                                              TRUE ~ club)
-        ) |>
-        dplyr::select(-c(representing)) |>
-
-        #fix names from large international events without a club
-        dplyr::left_join(kickout::data_name_club_map, by = "name") |>
-        dplyr::mutate(club = dplyr::case_when(!is.na(club_1) ~ club_1,
-                                              TRUE ~ club),
-                      country = dplyr::case_when(!is.na(country_1) ~ country_1,
-                                                 TRUE ~ country)
-        ) |>
-        dplyr::select(-c(club_1, country_1))
+        clean_names() |>
+        clean_representing() |>
+        clean_international_name()
 
 
     return(final_data)
