@@ -1,9 +1,9 @@
 Package: kickout
-Title: What the Package Does (One Line, Title Case)
+Title: Fetches and processes data from Sporttech.io
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Kirstin", "Lyon", , "kirstin@mltwelve.com", role = c("aut", "cre"))
+Description: This package fetches and processes data from Sporttech.io.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

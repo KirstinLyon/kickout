@@ -89,13 +89,5 @@ process_event <- function(event) {
                                  TRUE ~ as.numeric(D))
         )
 
-
-    #clean names, countries, clubs
-    final_data <- complete_score |>
-        clean_names() |>
-        clean_representing() |>
-        clean_international_name()
-
-
-    return(final_data)
+    return(complete_score)
 }

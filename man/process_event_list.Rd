@@ -4,10 +4,12 @@
 \alias{process_event_list}
 \title{Process_event_list}
 \usage{
-process_event_list(event_list)
+process_event_list(event_list, sport_type)
 }
 \arguments{
 \item{event_list}{list of all trampoline events}
+
+\item{sport_type}{type of sport, e.g., Trampoline}
 }
 \value{
 a tibble of all trampoline events
