@@ -56,6 +56,11 @@ process_event <- function(event, discipline_type) {
     execution_score <- temp |>
         dplyr::filter(judge == "e_sigma")
 
+    T_score <- temp |>
+        dplyr::filter(judge == "T") |>
+        dplyr::select(unique_id, dplyr::matches("^s\\d+")) |>
+        dplyr::rename_with(~ stringr::str_replace(.x, "^s(\\d+)", "t\\1"), dplyr::starts_with("s"))
+
 
     other_scores <- temp |>
         dplyr::select(judge, x, unique_id) |>
@@ -70,25 +75,10 @@ process_event <- function(event, discipline_type) {
 
 
     complete_score <- execution_score |>
+        dplyr::left_join(T_score, by = "unique_id") |>
         dplyr::left_join(other_scores, by = "unique_id") |>
         dplyr::select(-c(judge, unique_id)) |>
-        dplyr::rename(execution = x) |>
-        dplyr::mutate(
-
-            execution = dplyr::case_when(discipline == "TRA" ~ as.numeric(execution)/10,
-                                         TRUE ~ as.numeric(execution)),
-            T = dplyr::case_when(discipline == "TRA" ~  as.numeric(T)/1000,
-                                 TRUE ~ as.numeric(T)),
-            mark_total = dplyr::case_when(discipline == "TRA" ~ as.numeric(mark_total)/ 1000,
-                                          TRUE ~ as.numeric(mark_total)),
-            mark = dplyr::case_when(discipline == "TRA" ~ as.numeric(mark)/ 1000,
-                                    TRUE ~ as.numeric(mark)),
-            H = dplyr::case_when(discipline == "TRA" ~ as.numeric(H)/10,
-                                 TRUE ~ as.numeric(H)),
-            H = H / 10,
-            D = dplyr::case_when(discipline  == "TRA" ~ as.numeric(D)/10,
-                                 TRUE ~ as.numeric(D))
-        )
+        dplyr::rename(execution = x)
 
     return(complete_score)
 }
