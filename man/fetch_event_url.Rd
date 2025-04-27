@@ -4,12 +4,14 @@
 \alias{fetch_event_url}
 \title{Return the CSV file of one event cleaned}
 \usage{
-fetch_event_url(id, e_list)
+fetch_event_url(id, e_list, discipline)
 }
 \arguments{
 \item{id}{id of an event}
 
 \item{e_list}{list of events as a tibble}
+
+\item{discipline}{event discipline e.g. TRA or SYN.  Can be a}
 }
 \value{
 tibble of a csv
@@ -19,6 +21,6 @@ Return the CSV file of one event cleaned
 }
 \examples{
  \dontrun{
-   fetch_event_url(id)
+   fetch_event_url(id)list
 }
 }

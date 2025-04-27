@@ -1,5 +1,6 @@
 #' Process an individual event
 #'
+#' @param discipline_type competition discipline e.g. TRA and SYN
 #' @param event tibble of a competition
 #'
 #' @returns a tibble of all scores for a single competition
@@ -9,10 +10,10 @@
 #'  \dontrun{
 #'    process_event(event)
 #' }
-process_event <- function(event) {
+process_event <- function(event, discipline_type) {
     temp <- event |>
         janitor::clean_names() |>
-        dplyr::filter(discipline %in% c("TRA", "SYN"),
+        dplyr::filter(discipline %in% discipline_type,
                       !stringr::str_detect(competition, "Test|TEST"),
         ) |>
 
