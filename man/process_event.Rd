@@ -4,10 +4,12 @@
 \alias{process_event}
 \title{Process an individual event}
 \usage{
-process_event(event)
+process_event(event, discipline_type)
 }
 \arguments{
 \item{event}{tibble of a competition}
+
+\item{discipline_type}{competition discipline e.g. TRA and SYN}
 }
 \value{
 a tibble of all scores for a single competition

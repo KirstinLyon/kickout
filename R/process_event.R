@@ -1,5 +1,6 @@
 #' Process an individual event
 #'
+#' @param discipline_type competition discipline e.g. TRA and SYN
 #' @param event tibble of a competition
 #'
 #' @returns a tibble of all scores for a single competition
@@ -9,10 +10,10 @@
 #'  \dontrun{
 #'    process_event(event)
 #' }
-process_event <- function(event) {
+process_event <- function(event, discipline_type) {
     temp <- event |>
         janitor::clean_names() |>
-        dplyr::filter(discipline %in% c("TRA", "SYN"),
+        dplyr::filter(discipline %in% discipline_type,
                       !stringr::str_detect(competition, "Test|TEST"),
         ) |>
 
@@ -29,7 +30,6 @@ process_event <- function(event) {
                 time,
                 code,
                 external_id,
-                date_of_birth,
                 sex,
                 ranked,
                 team,
@@ -43,6 +43,7 @@ process_event <- function(event) {
                 discipline,
                 competition,
                 stage,
+                date_of_birth,
                 group_number,
                 performance_number,
                 routine_number,
@@ -89,13 +90,5 @@ process_event <- function(event) {
                                  TRUE ~ as.numeric(D))
         )
 
-
-    #clean names, countries, clubs
-    final_data <- complete_score |>
-        clean_names() |>
-        clean_representing() |>
-        clean_international_name()
-
-
-    return(final_data)
+    return(complete_score)
 }
