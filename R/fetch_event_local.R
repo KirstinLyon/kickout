@@ -14,7 +14,7 @@
 fetch_event_local <- function(file, discipline_type){
 
     temp <- readr::read_csv(file, col_types = readr::cols(.default = "c")) |>
-        kickout::process_event()
+        kickout::process_event(discipline_type)
 
     return(temp)
 }
