@@ -4,10 +4,12 @@
 \alias{fetch_event_local}
 \title{Return the CSV file of one event cleaned}
 \usage{
-fetch_event_local(file)
+fetch_event_local(file, discipline_type)
 }
 \arguments{
 \item{file}{a local file in csv format from sporttech.io}
+
+\item{discipline_type}{Discipline type, e.g. "TRA" of "SYN"}
 }
 \value{
 tibble of a csv
@@ -17,6 +19,6 @@ Return the CSV file of one event cleaned
 }
 \examples{
  \dontrun{
-   fetch_event_local(file)
+   fetch_event_local(file, discipline_type)
 }
 }
